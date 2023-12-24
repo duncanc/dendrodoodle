@@ -213,12 +213,13 @@
                   const insertAfterEl = bottomConnectorElement(firstConnector);
                   let currentEl = topConnectorElement(lastConnector);
                   const bottomEl = bottomConnectorElement(lastConnector);
-                  console.log({insertAfterEl:insertAfterEl.innerText, currentEl:currentEl.innerText, bottomEl:bottomEl.innerText});
-                  for (;;) {
-                    const nextElement = currentEl.nextSibling;
-                    insertAfterEl.parentNode.insertBefore(currentEl, insertAfterEl.nextSibling);
-                    if (currentEl === bottomEl) break;
-                    currentEl = nextElement;
+                  if (insertAfterEl.nextElementSibling !== currentEl) {
+                    for (;;) {
+                      const nextElement = currentEl.nextSibling;
+                      insertAfterEl.parentNode.insertBefore(currentEl, insertAfterEl.nextSibling);
+                      if (currentEl === bottomEl) break;
+                      currentEl = nextElement;
+                    }
                   }
                 }
                 else {
@@ -226,11 +227,13 @@
                   const insertBeforeEl = topConnectorElement(lastConnector);
                   let currentEl = topConnectorElement(firstConnector);
                   const bottomEl = bottomConnectorElement(firstConnector);
-                  for (;;) {
-                    const nextElement = currentEl.nextSibling;
-                    insertBeforeEl.parentNode.insertBefore(currentEl, insertBeforeEl);
-                    if (currentEl === bottomEl) break;
-                    currentEl = nextElement;
+                  if (insertBeforeEl.previousElementSibling !== currentEl) {
+                    for (;;) {
+                      const nextElement = currentEl.nextSibling;
+                      insertBeforeEl.parentNode.insertBefore(currentEl, insertBeforeEl);
+                      if (currentEl === bottomEl) break;
+                      currentEl = nextElement;
+                    }
                   }
                 }
                 redraw();
